@@ -31,6 +31,8 @@ namespace PcAnketProject.Data.Repository
             return await connection.ExecuteScalarAsync<int>(query, resim);
         }
 
+
+        // tüm resim kayıtlarını getirme
         public async Task<IEnumerable<Resim>> GetAllAsync()
         {
             var query = "SELECT * FROM dt_resim";
@@ -38,6 +40,7 @@ namespace PcAnketProject.Data.Repository
             return await connection.QueryAsync<Resim>(query);
         }
 
+        // id ye göre resim getir 
         public async Task<Resim?> GetByIdAsync(int id)
         {
             var query = "SELECT * FROM dt_resim WHERE ID = @ID";
@@ -50,7 +53,7 @@ namespace PcAnketProject.Data.Repository
             var query = "DELETE FROM dt_resim WHERE ID = @ID";
             using var connection = _dbContext.CreateConnection();
             var affected = await connection.ExecuteAsync(query, new { ID = id });
-            return affected > 0;
+            return affected > 0; 
         }
     }
 }
