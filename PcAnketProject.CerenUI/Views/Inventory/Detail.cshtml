@@ -1,0 +1,137 @@
+﻿@using PcAnketProject.CerenUI.Models
+@removeTagHelper Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Dictionary<string, List<InventoryDetailViewModel>>
+
+
+@{
+    var kisi = ViewBag.Kisi as InventoryDetailViewModel;
+
+    @if (kisi == null)
+    {
+        <div class="alert alert-warning">Kullanıcı sistemde bulunamadı.</div>
+        return;
+    }
+
+    var aktifList = (ViewBag.AktifDonanimlar as List<ActiveDonanimViewModel>) ?? new List<ActiveDonanimViewModel>();
+    var durumList = (ViewBag.DurumList as List<DonanimDurumViewModel>) ?? new List<DonanimDurumViewModel>();
+    var donanimList = (ViewBag.DonanimList as List<DonanimListViewModel>) ?? new List<DonanimListViewModel>();
+}
+
+<h3>@kisi.Ad @kisi.Soyad – @kisi.Unvan</h3>
+<p><strong>TC:</strong> @kisi.Tc</p>
+<p><strong>Birim:</strong> @kisi.Birim</p>
+<hr />
+
+<h4>Yeni Donanım Ekle</h4>
+<form asp-action="AddDonanim" method="post" class="form-inline">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="kullaniciId" value="@kisi.NufusId" />
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <select name="donanimId" class="form-control">
+                <option value="">-- Donanım Seçin --</option>
+                @foreach (var d in donanimList)
+                {
+                    <option value="@d.Id">@d.Ad</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-success">Ekle</button>
+        </div>
+    </div>
+</form>
+
+@if (aktifList.Any())
+{
+    <form asp-action="KaydetDurumlar" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="kullaniciId" value="@kisi.NufusId" />
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Donanım</th>
+                    <th>İşlem No</th>
+                    <th>Yeni Durum</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < aktifList.Count; i++)
+                {
+                    <tr>
+                        <td>@aktifList[i].DonanimAd</td>
+                        <td>@aktifList[i].IslemNo</td>
+                        <td>
+                            <input type="hidden" name="Donanimlar[@i].DonanimAd" value="@aktifList[i].DonanimAd" />
+                            <input type="hidden" name="Donanimlar[@i].IslemNo" value="@aktifList[i].IslemNo" />
+
+                            <select name="Donanimlar[@i].YeniDurumId" class="form-control">
+                                @foreach (var s in durumList)
+                                {
+                                    var isSelected = s.Ad == aktifList[i].DonanimDurum;
+                                    var selectedAttr = isSelected ? "selected=\"selected\"" : "";
+                                    <option value="@s.Id" @Html.Raw(selectedAttr)>@s.Ad</option>
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <label>Açıklama</label>
+    <textarea name="Aciklama" class="form-control" rows="2"
+              placeholder="Genel açıklamanızı buraya yazın…">@ViewBag.CurrentAciklama</textarea>
+
+        <br />
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+    </form>
+}
+
+@foreach (var grup in Model)
+{
+    var ilk = grup.Value.First();
+    var collapseId = $"details_{grup.Key.Replace(".", "_")}";
+
+    <div class="transaction-group mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h5>İşlem No: @grup.Key</h5>
+                <p><strong>Açıklama:</strong> @ilk.Aciklama</p>
+            </div>
+            <button type="button"
+                    class="btn btn-sm btn-outline-secondary toggle-btn"
+                    data-target="@collapseId">+</button>
+        </div>
+        <div id="@collapseId"
+             class="additional-info ps-3 mt-2"
+             style="display:none;">
+            <p><strong>Tarih:</strong> @ilk.IslemTarihi:dd.MM.yyyy</p>
+            <p><strong>Yetkili:</strong> @ilk.YetkiliAdSoyad</p>
+            <ul>
+                @foreach (var item in grup.Value)
+                {
+                    <li>
+                        @item.DonanimAd – @item.DonanimDurum – @(item.Aktif == true ? "Aktif" : "Pasif")
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".toggle-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const tgt = document.getElementById(btn.dataset.target);
+                if (!tgt) return;
+                const isHidden = tgt.style.display === "none";
+                tgt.style.display = isHidden ? "block" : "none";
+                btn.textContent = isHidden ? "–" : "+";
+            });
+        });
+    });
+</script>

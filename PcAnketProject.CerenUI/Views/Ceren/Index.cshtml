@@ -1,0 +1,44 @@
+﻿	@model List<cerendto>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h4>ceren</h4>
+<div class=" mt-4">
+    <h2>Protokol Kontenjan Listesi</h2>
+
+    @if (ViewData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
+    }
+    else if (Model.Count == 0)
+    {
+        <div class="alert alert-warning">Kayıt bulunamadı.</div>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead class="table-light">
+                <tr>
+                    
+                    <th>Protokol Adı</th>
+             
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ad</td>
+                     
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+

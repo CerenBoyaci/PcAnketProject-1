@@ -1,0 +1,66 @@
+﻿@model KullaniciGirisKontrolRequest
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container pb-5">
+    <div class="row align-items-md-stretch">
+        <div class="col-md-6">
+            <div class="h-100 p-4 bg-light border rounded-3">
+                <h3 class="text-center">Pusula İle Giriş Yap</h3>
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        @TempData["SuccessMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+                <form asp-action="Giris" method="post">
+                    <div class="mb-3">
+                        @*   <label class="text-success"><h4>Çalışacağınız yeri  ve belge kontrol sonucunuzu görmek için giriş yapınız.</h4></label> *@
+                        <label for="username" class="form-label">Pusula Kullanıcı Adı<br /><span>Not:"@@posta.pau.edu.tr" <b>yazmadan</b> <u>sadece kullanıcı adınız</u> ile giriş yapabilirsiniz. </span></label>
+                        <input asp-for="username" class="form-control" value="@Model?.username" />
+                        <span asp-validation-for="username" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="parola" class="form-label">Parola</label>
+                        <input asp-for="password" type="password" class="form-control" />
+                        <span asp-validation-for="password" class="text-danger"></span>
+                    </div>
+                    <div class="text-danger">
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Giriş Yap</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="row g-0">
+
+                    <div class="col-md-12">
+                        <div class="card-body">
+                            <div style="display:none" class="alert alert-danger p-2" role="alert">
+                                <h5 class="card-title">Önemli Tarihler</h5><br />
+                                <p class="card-text"><b>Noter Çekilişi:</b> 27 Şubat 2025 </p>
+                                <p class="card-text"><b>Sisteme Belge Yükleme Tarihleri:</b> 1-2-3 Mart 2025</p>
+                                <p class="card-text"><b>Komisyon Belge Kontrolü:</b> 4-5 Mart 2025</p>
+                                <p class="card-text"><b>İşe Başlama:</b> 10 Mart 2025</p>
+                            </div>
+                            <p>
+                                Kişisel verilerin korunması hakkında bilgilendirme için
+                                <a href="https://www.pau.edu.tr/kvkk" target="_blank">buraya bakabilirsiniz</a>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-0">
+                <div class="row g-0">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<PcAnketProject.CerenUI.Models.PersonelAramaViewModel>
+@{
+    ViewBag.Title = "Personel Arama";
+}
+
+
+
+
+
+<form asp-action="Add" method="get" class="mb-3">
+    <input type="text" name="search" value="@ViewBag.Search" class="form-control" placeholder="TC, Ad, Soyad veya Birim adı girin" />
+    <button type="submit" class="btn btn-primary mt-2">Ara</button>
+</form>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nufus</th>
+                <th>TC</th>
+                <th>Ad</th>
+                <th>Soyad</th>
+                <th>Unvan</th>
+                <th>Birim</th>
+                <th>İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.nufus_id</td>
+                    <td>@item.TcNo</td>
+                    <td>@item.Ad</td>
+                    <td>@item.Soyad</td>
+                    <td>@item.UnvanGorev</td>
+                    <td>@item.AnaBirimAd</td>
+                    <td>
+                        <form asp-action="InsertToSystem" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="NufusId" value="@item.nufus_id" />
+                            <input type="hidden" name="Tc" value="@item.TcNo" />
+                            <input type="hidden" name="Ad" value="@item.Ad" />
+                            <input type="hidden" name="Soyad" value="@item.Soyad" />
+                            <input type="hidden" name="UnvanId" value="@item.UnvanGorevId" />
+                            <input type="hidden" name="Unvan" value="@item.UnvanGorev" />
+                            <input type="hidden" name="BirimId" value="@item.AnaBirimId" />
+                            <input type="hidden" name="Birim" value="@item.AnaBirimAd" />
+                            <input type="hidden" name="Durum" value="1" />
+                            <button type="submit" class="btn btn-success btn-sm">Sisteme Ekle</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+else if (!string.IsNullOrWhiteSpace(ViewBag.Search as string))
+{
+    <div class="alert alert-warning">Aradığınız kriterlere uygun sonuç bulunamadı.</div>
+}
+

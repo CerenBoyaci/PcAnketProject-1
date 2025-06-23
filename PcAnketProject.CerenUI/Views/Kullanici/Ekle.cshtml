@@ -1,0 +1,23 @@
+﻿@model PcAnketProject.CerenUI.Models.KullaniciDto
+
+@{
+    ViewData["Title"] = "Ekle";
+}
+
+<h1>Ekle</h1>
+
+<form method="post">
+    <input asp-for="Ad" placeholder="Ad" class="form-control mb-2" />
+    <input asp-for="Soyad" placeholder="Soyad" class="form-control mb-2" />
+    <input asp-for="Tc" placeholder="TC Kimlik No" class="form-control mb-2" />
+    <input asp-for="Parola" placeholder="Parola" class="form-control mb-2" />
+    <input asp-for="NufusID" placeholder="Nüfus ID" class="form-control mb-2" />
+    <input asp-for="Yetki" placeholder="Yetki" class="form-control mb-2" />
+    <input asp-for="Tarih" type="date" class="form-control mb-2" />
+    <label>
+        Durum:
+        <input asp-for="Durum" type="checkbox" />
+    </label>
+    <button type="submit" class="btn btn-success mt-3">Kaydet</button>
+</form>
+

@@ -1,0 +1,54 @@
+﻿@model PcAnketProject.CerenUI.Models.KullaniciDto
+
+@{
+    ViewData["Title"] = "Guncelle";
+}
+
+<h1>Guncelle</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="ID" />
+
+    <div class="mb-3">
+        <label asp-for="NufusID" class="form-label"></label>
+        <input asp-for="NufusID" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Ad" class="form-label"></label>
+        <input asp-for="Ad" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Soyad" class="form-label"></label>
+        <input asp-for="Soyad" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Tc" class="form-label"></label>
+        <input asp-for="Tc" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Parola" class="form-label"></label>
+        <input asp-for="Parola" type="password" class="form-control" />
+    </div>
+
+    <div class="mb-3 form-check">
+        <input asp-for="Durum" class="form-check-input" type="checkbox" />
+        <label asp-for="Durum" class="form-check-label"></label>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Tarih" class="form-label"></label>
+        <input asp-for="Tarih" type="date" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Yetki" class="form-label"></label>
+        <input asp-for="Yetki" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+    <a href="/Kullanici/Kullanici" class="btn btn-secondary ms-2">İptal</a>
+</form>

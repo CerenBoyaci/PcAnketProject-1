@@ -1,0 +1,15 @@
+﻿@model PcAnketProject.CerenUI.Models.KullaniciDto
+
+@{
+    ViewData["Title"] = "Sil";
+}
+
+<h1>Silme Onayı</h1>
+
+<p>@Model.Ad @Model.Soyad kullanıcısını silmek istediğinize emin misiniz?</p>
+
+<form method="post" asp-action="Sil" asp-route-id="@Model.ID">
+    <button type="submit" class="btn btn-danger">Evet, Sil</button>
+    <a href="/Kullanici/Kullanici" class="btn btn-secondary ms-2">Hayır, İptal</a>
+</form>
+

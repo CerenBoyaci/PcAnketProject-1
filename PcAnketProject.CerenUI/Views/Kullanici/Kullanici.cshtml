@@ -1,0 +1,53 @@
+﻿@model List<PcAnketProject.CerenUI.Models.KullaniciDto>
+
+@{
+    ViewData["Title"] = "Kullanıcı Listesi";
+}
+
+<h2 class="my-3">Kullanıcı Listesi</h2>
+
+<a asp-controller="Kullanici" asp-action="Ekle" class="btn btn-primary mb-3">Kullanıcı Ekle</a>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nüfus ID</th>
+                <th>Ad</th>
+                <th>Soyad</th>
+                <th>TC</th>
+                <th>Parola</th>
+                <th>Durum</th>
+                <th>Tarih</th>
+                <th>Yetki</th>
+                <th>İşlem</th> 
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ID</td>
+                    <td>@item.NufusID</td>
+                    <td>@item.Ad</td>
+                    <td>@item.Soyad</td>
+                    <td>@item.Tc</td>
+                    <td>@item.Parola</td>
+                    <td>@(item.Durum ? "Aktif" : "Pasif")</td>
+                    <td>@item.Tarih.ToString("dd.MM.yyyy")</td>
+                    <td>@item.Yetki</td>
+                    <td>
+                        <a href="/Kullanici/Guncelle/@item.ID" class="btn btn-warning btn-sm">Güncelle</a>
+                        <a href="/Kullanici/Sil/@item.ID" class="btn btn-danger btn-sm" onclick="return confirm('Silmek istediğine emin misin?')">Sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">Kullanıcı bulunamadı.</div>
+}

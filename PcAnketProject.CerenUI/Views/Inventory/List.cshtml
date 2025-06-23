@@ -1,0 +1,76 @@
+﻿@model IEnumerable<InventoryPersonelViewModel>
+@{
+    var currentSearch = ViewBag.CurrentSearch as string;
+    var allDonanimlar = ViewBag.AllDonanimlar as List<PcAnketProject.CerenUI.Models.DonanimListViewModel>;
+    var selectedDonanimlar = ViewBag.SelectedDonanimlar as List<int> ?? new List<int>();
+}
+
+<form method="get" asp-action="List" class="mb-3">
+    <div class="mb-2">
+        <input type="text" name="search" class="form-control" placeholder="TC, Ad, Soyad, Birim ara..." value="@currentSearch" />
+    </div>
+
+    <div class="mb-2">
+        <label><strong>Donanım Filtrele:</strong></label><br />
+        @foreach (var item in allDonanimlar)
+        {
+            <div class="form-check form-check-inline">
+                <input type="checkbox" name="selectedDonanimlar" value="@item.Id"
+                       class="form-check-input"
+                @(selectedDonanimlar.Contains(item.Id) ? "checked" : "") />
+                <label class="form-check-label">@item.Ad</label>
+            </div>
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary">Filtrele</button>
+    <a asp-action="List" class="btn btn-secondary">Temizle</a>
+</form>
+<form method="get" asp-action="ExportToExcel" class="mb-3">
+    <input type="hidden" name="search" value="@currentSearch" />
+    @foreach (var id in selectedDonanimlar)
+    {
+        <input type="hidden" name="selectedDonanimlar" value="@id" />
+    }
+    <button type="submit" class="btn btn-success">Excel'e Aktar</button>
+</form>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>TC</th>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Unvan</th>
+            <th>Birim</th>
+            <th>Donanımlar</th>
+            <th>Ayrıntılar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int siraNo = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@siraNo</td>
+                <td>@item.Tc</td>
+                <td>@item.Ad</td>
+                <td>@item.Soyad</td>
+                <td>@item.Unvan</td>
+                <td>@item.Birim</td>
+                <td>@(string.IsNullOrEmpty(item.Donanimlar) ? "Donanım Yok" : item.Donanimlar)</td>
+                <td>
+                    <a href="@Url.Action("Detail", "Inventory", new { kullaniciID = item.NufusId })" class="btn btn-info btn-sm">
+                        Ayrıntı
+                    </a>
+                </td>
+            </tr>
+            siraNo++;
+        }
+    </tbody>
+
+</table>

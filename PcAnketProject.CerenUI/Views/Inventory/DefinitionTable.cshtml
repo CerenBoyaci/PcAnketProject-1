@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Donanım ve Durum Tanımları";
+    var donanimlar = ViewBag.Donanimlar as List<DonanimListViewModel>;
+    var durumlar = ViewBag.Durumlar as List<DonanimDurumViewModel>;
+}
+
+<h2>Donanım Tanımları</h2>
+<form method="post" asp-action="AddLuDonanim">
+    <div class="input-group mb-3">
+        <input type="text" name="ad" class="form-control" placeholder="Yeni donanım adı" required />
+        <button class="btn btn-primary" type="submit">Ekle</button>
+    </div>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr><th>ID</th><th>Ad</th><th>İşlem</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var item in donanimlar)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>
+                    <form method="post" asp-action="UpdateLuDonanim" class="d-flex gap-2">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="text" name="ad" class="form-control" value="@item.Ad" />
+                        <button class="btn btn-sm btn-success" type="submit">Güncelle</button>
+                    </form>
+                </td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<h2>Donanım Durumları</h2>
+<form method="post" asp-action="AddLuDurum">
+    <div class="input-group mb-3">
+        <input type="text" name="ad" class="form-control" placeholder="Yeni durum adı" required />
+        <button class="btn btn-primary" type="submit">Ekle</button>
+    </div>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr><th>ID</th><th>Ad</th><th>İşlem</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var item in durumlar)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>
+                    <form method="post" asp-action="UpdateLuDurum" class="d-flex gap-2">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="text" name="ad" class="form-control" value="@item.Ad" />
+                        <button class="btn btn-sm btn-success" type="submit">Güncelle</button>
+                    </form>
+                </td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
