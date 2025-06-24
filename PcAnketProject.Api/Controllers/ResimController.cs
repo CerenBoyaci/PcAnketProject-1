@@ -6,6 +6,9 @@ using PcAnketProject.Service;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+
 
 namespace PcAnketProject.Api.Controllers
 {
@@ -70,6 +73,34 @@ namespace PcAnketProject.Api.Controllers
         {
             var success = await _service.DeleteAsync(id);
             return success ? Ok("Silindi") : NotFound("Bulunamadı");
+        }
+
+
+        [HttpGet("img/{id}")]
+        public async Task<IActionResult> GetImage(int id, [FromQuery] int? width, [FromQuery] int? height)
+        {
+            var resim = await _service.GetByIdAsync(id);
+            if (resim == null)
+                return NotFound();
+
+            var fullPath = Path.Combine(_env.WebRootPath ?? "wwwroot", resim.DosyaYolu.Replace('/', Path.DirectorySeparatorChar));
+            if (!System.IO.File.Exists(fullPath))
+                return NotFound();
+
+            using var image = await Image.LoadAsync(fullPath);
+
+            if (width.HasValue || height.HasValue)
+            {
+                image.Mutate(x => x.Resize(new ResizeOptions
+                {
+                    Mode = ResizeMode.Max,
+                    Size = new Size(width ?? 0, height ?? 0)
+                }));
+            }
+
+            using var ms = new MemoryStream();
+            await image.SaveAsJpegAsync(ms);
+            return File(ms.ToArray(), "image/jpeg");
         }
     }
 }
