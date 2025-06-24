@@ -72,6 +72,11 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}"); // ← id? eklendi
 
 // Diğer özel route'lar
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapControllerRoute(
     name: "Komisyon",
     pattern: "{controller=Komisyon}/{action=Index}");

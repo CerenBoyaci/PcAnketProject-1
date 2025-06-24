@@ -20,7 +20,12 @@
             <td>@item.DosyaAdi</td>
             <td>@item.DosyaYolu</td>
             <td>@item.YuklenmeTarihi</td>
-            <td><img src="/@item.DosyaYolu" width="100" /></td>
+            <td>
+                <a href="@Url.Action("Goruntule", "Resim", new { id = item.ID })" target="_blank">
+                    <img src="/images/view-icon.png" width="24" />
+                </a>
+            </td>
         </tr>
     }
 </table>
+

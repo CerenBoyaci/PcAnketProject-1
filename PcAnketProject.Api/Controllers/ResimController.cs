@@ -75,7 +75,6 @@ namespace PcAnketProject.Api.Controllers
             return success ? Ok("Silindi") : NotFound("Bulunamadı");
         }
 
-
         [HttpGet("img/{id}")]
         public async Task<IActionResult> GetImage(int id, [FromQuery] int? width, [FromQuery] int? height)
         {
@@ -102,5 +101,7 @@ namespace PcAnketProject.Api.Controllers
             await image.SaveAsJpegAsync(ms);
             return File(ms.ToArray(), "image/jpeg");
         }
+
+
     }
 }

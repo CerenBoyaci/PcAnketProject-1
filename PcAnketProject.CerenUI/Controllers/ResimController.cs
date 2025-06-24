@@ -49,6 +49,28 @@ namespace PcAnketProject.CerenUI.Controllers
 
             return View();
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Goruntule(int id, int? width, int? height)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync($"https://localhost:7211/api/Resim/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var model = JsonConvert.DeserializeObject<ResimDto>(json);
+
+                ViewBag.Width = width ?? 300;
+                ViewBag.Height = height ?? 300;
+
+                return View(model);
+            }
+
+            return NotFound("Resim bulunamadı.");
+        }
+
     }
 }
 

@@ -1,0 +1,22 @@
+﻿@model PcAnketProject.CerenUI.Models.ResimDto
+
+@{
+    ViewData["Title"] = "Goruntule";
+}
+
+<h1>Resim Görüntüle</h1>
+
+<form method="get">
+    <input type="hidden" name="id" value="@Model.ID" />
+    <label>Genişlik:</label>
+    <input type="number" name="width" value="@ViewBag.Width" />
+    <label>Yükseklik:</label>
+    <input type="number" name="height" value="@ViewBag.Height" />
+    <button type="submit">Uygula</button>
+</form>
+
+<br />
+
+<img src="https://localhost:7211/api/Resim/img/@Model.ID?width=@ViewBag.Width&height=@ViewBag.Height"
+     style="max-width:100%; border:1px solid #ccc;" />
+
