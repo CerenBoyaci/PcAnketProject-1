@@ -3,13 +3,20 @@ using PcAnketProject.Service;
 using PcAnketProject.Data.Context;
 
 
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<DbContext>(); // varsa connection string burada kullanýlýyor
+builder.Services.AddScoped<ResimRepository>();
+builder.Services.AddScoped<ResimService>();
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<DbContext>(provider => new DbContext(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<DbContext>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
