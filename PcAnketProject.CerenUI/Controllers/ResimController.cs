@@ -53,6 +53,19 @@ namespace PcAnketProject.CerenUI.Controllers
         }
 
 
+        // silme işlemi 
+        [HttpPost]
+        public async Task<IActionResult> Sil(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.DeleteAsync($"https://localhost:7211/api/Resim/{id}");
+
+            if (response.IsSuccessStatusCode)
+                return RedirectToAction("Index");
+
+            return BadRequest("Silinemedi");
+        }
+
         [HttpGet]
         public async Task<IActionResult> Goruntule(int id, int? width, int? height)
         {

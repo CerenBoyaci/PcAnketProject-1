@@ -5,27 +5,40 @@
 }
 
 <h1>Yüklenen Resimler</h1>
-<table class="table">
-    <tr>
-        <th>ID</th>
-        <th>Dosya Adı</th>
-        <th>Dosya Yolu</th>
-        <th>Tarih</th>
-        <th>Görüntüle</th>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.ID</td>
-            <td>@item.DosyaAdi</td>
-            <td>@item.DosyaYolu</td>
-            <td>@item.YuklenmeTarihi</td>
-            <td>
-                <a href="@Url.Action("Goruntule", "Resim", new { id = item.ID })" target="_blank">
-                    <img src="/images/view-icon.png" width="24" />
-                </a>
-            </td>
-        </tr>
-    }
-</table>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Dosya Adı</th>
+            <th>Dosya Yolu</th>
+            <th>Tarih</th>
+            <th>Görüntüle</th>
+            <th>Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ID</td>
+                <td>@item.DosyaAdi</td>
+                <td>@item.DosyaYolu</td>
+                <td>@item.YuklenmeTarihi</td>
+                <td>
+                    <a href="@Url.Action("Goruntule", "Resim", new { id = item.ID })" target="_blank">
+                        <img src="/images/view-icon.png" width="24" />
+                    </a>
+                </td>
+                <td>
+                    <form asp-action="Sil" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@item.ID" />
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Silmek istediğinize emin misiniz?')">
+                            Sil
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
