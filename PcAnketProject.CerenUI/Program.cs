@@ -66,7 +66,7 @@ app.Use(async (context, next) =>
 app.UseRouting();
 app.UseAuthorization();
 
-// --- 🔧 GÜNCELLENEN KISIM BURASI ---
+// ---  GÜNCELLENEN KISIM BURASI ---
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"); // ← id? eklendi

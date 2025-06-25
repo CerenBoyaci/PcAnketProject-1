@@ -8,6 +8,7 @@ namespace PcAnketProject.Core.Dto
 {
     public class Resim
     {
+        //veri tabanında tutulmasını istediğimiz şeyler
         public int ID { get; set; }
         public string DosyaAdi { get; set; }
         public string DosyaYolu { get; set; }

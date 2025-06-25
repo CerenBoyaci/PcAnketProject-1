@@ -9,6 +9,7 @@ using PcAnketProject.Data.Context;
 
 namespace PcAnketProject.Data.Repository
 {
+    // veri tabanında yapılacak işlemler burada 
     public class ResimRepository
     {
         private readonly DbContext _dbContext;
@@ -18,6 +19,7 @@ namespace PcAnketProject.Data.Repository
             _dbContext = dbContext;
         }
 
+        // resmi veri tabanına ekler 
         public async Task<int> AddAsync(Resim resim)
         {
             var query = @"INSERT INTO dt_resim (DosyaAdi, DosyaYolu, YuklenmeTarihi)
@@ -28,6 +30,7 @@ namespace PcAnketProject.Data.Repository
             return await connection.ExecuteScalarAsync<int>(query, resim);
         }
 
+        //tüm kayıtları getirir 
         public async Task<IEnumerable<Resim>> GetAllAsync()
         {
             var query = "SELECT * FROM dt_resim";
@@ -35,6 +38,7 @@ namespace PcAnketProject.Data.Repository
             return await connection.QueryAsync<Resim>(query);
         }
 
+        //belirli bir resmi getirir
         public async Task<Resim?> GetByIdAsync(int id)
         {
             var query = "SELECT * FROM dt_resim WHERE ID = @ID";
@@ -42,6 +46,7 @@ namespace PcAnketProject.Data.Repository
             return await connection.QueryFirstOrDefaultAsync<Resim>(query, new { ID = id });
         }
 
+        //belli bir resmi siler 
         public async Task<bool> DeleteAsync(int id)
         {
             var query = "DELETE FROM dt_resim WHERE ID = @ID";

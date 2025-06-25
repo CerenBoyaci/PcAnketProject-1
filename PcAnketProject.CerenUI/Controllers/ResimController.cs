@@ -14,6 +14,8 @@ namespace PcAnketProject.CerenUI.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
+
+        // api den resimleri çağırıyoruz
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
@@ -26,16 +28,16 @@ namespace PcAnketProject.CerenUI.Controllers
                 return View(data);
             }
 
-            return View(new List<ResimDto>());
+            return View(new List<ResimDto>()); //Views/Resim/Index.cshtml görünümüne gönderilir
         }
 
         [HttpGet]
-        public IActionResult Yukle()
+        public IActionResult Yukle() // boş dosya yükleme sayfası
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost] // resmi seçeriz yükleriz ve index sayfasına gideriz
         public async Task<IActionResult> Yukle(IFormFile file)
         {
             var client = _httpClientFactory.CreateClient();
@@ -54,18 +56,18 @@ namespace PcAnketProject.CerenUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Goruntule(int id, int? width, int? height)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7211/api/Resim/{id}");
+            var client = _httpClientFactory.CreateClient(); // istemci oluşturduk 
+            var response = await client.GetAsync($"https://localhost:7211/api/Resim/{id}"); // api den istedik
 
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
                 var model = JsonConvert.DeserializeObject<ResimDto>(json);
 
-                ViewBag.Width = width ?? 300;
+                ViewBag.Width = width ?? 300; // kullanıcı başka boyut demediyse 300 300 döner
                 ViewBag.Height = height ?? 300;
 
-                return View(model);
+                return View(model); // sonra view e gönderilir 
             }
 
             return NotFound("Resim bulunamadı.");

@@ -11,6 +11,9 @@ namespace PcAnketProject.Service
 {
     public class ResimService
     {
+        // repository kullanarak iş mantığını yönetir 
+        // ui ve api katmanları bu sınıfla konuşur 
+        // kod tekrarını azaltır 
         private readonly ResimRepository _resimRepository;
 
         public ResimService(ResimRepository resimRepository)
