@@ -1,0 +1,29 @@
+﻿@model List<PcAnketProject.CerenUI.Models.ResimVeDuzenDto>
+
+@{
+    ViewData["Title"] = "İçerik Sayfası";
+    var roller = new[] { "Kapak", "İçerik1", "İçerik2", "İçerik3", "İçerik4", "İçerik5", "İçerik6", "İçerik7", "İçerik8" };
+}
+
+<div style="max-width: 800px; margin: auto; font-family: sans-serif;">
+    @foreach (var rol in roller)
+    {
+        var resim = Model.FirstOrDefault(x => x.Rolu == rol);
+        if (resim != null)
+        {
+            var width = resim.Genislik ?? 800; // default 800
+            var height = resim.Yukseklik ?? 0; // yükseklik verilmemişse orantılı olur
+
+            <div style="margin-bottom: 30px; text-align: center;">
+                <img src="https://localhost:7211/api/Resim/img/@resim.ResimID?width=@width&height=@height"
+                     style="max-width:100%; border:1px solid #ccc;" />
+
+                @if (!string.IsNullOrWhiteSpace(resim.Baslik))
+                {
+                    <h3 style="margin-top: 10px;">@resim.Baslik</h3>
+                }
+            </div>
+        }
+    }
+</div>
+

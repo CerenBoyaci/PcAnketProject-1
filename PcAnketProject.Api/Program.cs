@@ -7,6 +7,10 @@ using PcAnketProject.Data.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<ResimDuzenRepository>();
+builder.Services.AddScoped<ResimDuzenService>();
+
+
 builder.Services.AddScoped<DbContext>(); // varsa connection string burada kullanýlýyor
 builder.Services.AddScoped<ResimRepository>();
 builder.Services.AddScoped<ResimService>();
