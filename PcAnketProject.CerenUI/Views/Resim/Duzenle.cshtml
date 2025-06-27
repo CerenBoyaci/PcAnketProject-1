@@ -1,4 +1,5 @@
 ﻿@model List<PcAnketProject.CerenUI.Models.ResimVeDuzenDto>
+
 @{
     ViewData["Title"] = "Duzenle";
 }
@@ -10,7 +11,7 @@
         @for (int i = 0; i < Model.Count; i++)
         {
             <div style="border: 1px solid #ccc; padding: 10px;">
-                
+
                 <img src="https://localhost:7211/api/Resim/img/@Model[i].ResimID?width=150" /><br />
 
                 <input type="hidden" name="model[@i].ResimID" value="@Model[i].ResimID" />
@@ -22,11 +23,18 @@
                 <label>Rol:</label>
                 <select name="model[@i].Rolu">
                     <option value="">Seçiniz</option>
-                    <option value="Kapak" selected="@(Model[i].Rolu == "Kapak")">Başlık Resmi</option>
-                    <option value="İçerik1" selected="@(Model[i].Rolu == "İçerik1")">İçerik 1</option>
-                    <option value="İçerik2" selected="@(Model[i].Rolu == "İçerik2")">İçerik 2</option>
-                    
-                </select>
+                    @for (int j = 0; j <= 8; j++)
+                    {
+                        var rol = j == 0 ? "Kapak" : $"İçerik{j}";
+                        <option value="@rol" selected="@(Model[i].Rolu == rol)">@rol</option>
+                    }
+                </select><br />
+
+                <label>Genişlik:</label>
+                <input type="number" name="model[@i].Genislik" value="@Model[i].Genislik" /><br />
+
+                <label>Yükseklik:</label>
+                <input type="number" name="model[@i].Yukseklik" value="@Model[i].Yukseklik" /><br />
             </div>
         }
     </div>
