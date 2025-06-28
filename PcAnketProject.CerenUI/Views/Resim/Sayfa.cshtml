@@ -3,27 +3,45 @@
 @{
     ViewData["Title"] = "İçerik Sayfası";
     var roller = new[] { "Kapak", "İçerik1", "İçerik2", "İçerik3", "İçerik4", "İçerik5", "İçerik6", "İçerik7", "İçerik8" };
+
+    var rastgeleMetinler = new[]
+    {
+        "Bu görsel önemli bir bilgiyi temsil etmektedir.",
+        "İçerik detayları bu bölümde yer almaktadır.",
+        "Konu hakkında daha fazla bilgi aşağıda sunulmuştur.",
+        "Bu başlıkla ilgili açıklamalar sağda yer almaktadır.",
+        "Resmin anlamı bu metinde açıklanmıştır.",
+        "İlgili içerik burada görüntülenebilir.",
+        "Bu alan açıklayıcı bilgiler içermektedir.",
+        "İçerik detayı sağdaki metinde verilmiştir.",
+        "Konuyla ilgili bilgiler bu kısımdadır."
+    };
 }
 
-<div style="max-width: 800px; margin: auto; font-family: sans-serif;">
-    @foreach (var rol in roller)
+<div style="max-width: 1000px; margin: auto; font-family: sans-serif;">
+    @for (int i = 0; i < roller.Length; i++)
     {
+        var rol = roller[i];
         var resim = Model.FirstOrDefault(x => x.Rolu == rol);
+
         if (resim != null)
         {
-            var width = resim.Genislik ?? 800; // default 800
-            var height = resim.Yukseklik ?? 0; // yükseklik verilmemişse orantılı olur
+            <div style="display: flex; align-items: center; margin-bottom: 40px; gap: 20px;">
 
-            <div style="margin-bottom: 30px; text-align: center;">
-                <img src="https://localhost:7211/api/Resim/img/@resim.ResimID?width=@width&height=@height"
-                     style="max-width:100%; border:1px solid #ccc;" />
+                <div style="flex: 1; text-align: center;">
+                    <img src="https://localhost:7211/api/Resim/img/@resim.ResimID?width=@resim.Genislik&height=@resim.Yukseklik"
+                         style="max-width: 100%; border: 1px solid #ccc;" />
+                </div>
 
-                @if (!string.IsNullOrWhiteSpace(resim.Baslik))
-                {
-                    <h3 style="margin-top: 10px;">@resim.Baslik</h3>
-                }
+
+                <div style="flex: 2;">
+                    @if (!string.IsNullOrWhiteSpace(resim.Baslik))
+                    {
+                        <h3>@resim.Baslik</h3>
+                    }
+                    <p>@rastgeleMetinler[i % rastgeleMetinler.Length]</p>
+                </div>
             </div>
         }
     }
 </div>
-
