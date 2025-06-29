@@ -14,6 +14,8 @@ namespace PcAnketProject.Core.Dto
         public string? Rolu { get; set; }
         public int? Genislik { get; set; }
         public int? Yukseklik { get; set; }
+        public bool Aktif { get; set; } = true; 
+
 
     }
 }

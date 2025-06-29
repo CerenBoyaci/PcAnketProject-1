@@ -20,6 +20,10 @@ namespace PcAnketProject.Api.Controllers
         public async Task<IActionResult> GetAll()
         {
             var result = await _service.GetAllAsync();
+            foreach (var item in result)
+            {
+                Console.WriteLine($"ID: {item.ID}, Aktif: {item.Aktif}");
+            }
             return Ok(result);
         }
 
@@ -33,9 +37,16 @@ namespace PcAnketProject.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] ResimDuzen dto)
         {
-            dto.ID = id;
+            if (id != dto.ID)
+                return BadRequest("ID uyuşmuyor");
+
             var success = await _service.UpdateAsync(dto);
             return success ? Ok("Güncellendi") : NotFound("Bulunamadı");
         }
+
+
+
+
+
     }
 }

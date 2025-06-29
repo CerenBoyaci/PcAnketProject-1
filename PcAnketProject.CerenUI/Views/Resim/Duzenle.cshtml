@@ -10,12 +10,12 @@
     <div style="display: flex; flex-wrap: wrap; gap: 20px;">
         @for (int i = 0; i < Model.Count; i++)
         {
-            <div style="border: 1px solid #ccc; padding: 10px;">
-
+            <div style="border: 1px solid #ccc; padding: 10px; width: 220px;">
                 <img src="https://localhost:7211/api/Resim/img/@Model[i].ResimID?width=150" /><br />
 
                 <input type="hidden" name="model[@i].ResimID" value="@Model[i].ResimID" />
                 <input type="hidden" name="model[@i].DuzenID" value="@Model[i].DuzenID" />
+                <input type="hidden" name="model[@i].Aktif" value="@Model[i].Aktif" />
 
                 <label>Başlık:</label>
                 <input type="text" name="model[@i].Baslik" value="@Model[i].Baslik" /><br />
@@ -35,6 +35,19 @@
 
                 <label>Yükseklik:</label>
                 <input type="number" name="model[@i].Yukseklik" value="@Model[i].Yukseklik" /><br />
+
+                <label>Durum:</label>
+                <span>@(Model[i].Aktif ? "Aktif" : "Pasif")</span><br />
+                <label>Durum:</label>
+                <span>@(Model[i].Aktif ? "Aktif" : "Pasif") (Debug: @Model[i].Aktif)</span><br />
+
+                @if (Model[i].DuzenID.HasValue)
+                {
+                    <form asp-action="Sil" asp-controller="ResimDuzen" method="post">
+                        <input type="hidden" name="duzenId" value="@Model[i].DuzenID" />
+                        <button type="submit" class="btn btn-danger" style="margin-top:10px;">Sil</button>
+                    </form>
+                }
             </div>
         }
     </div>

@@ -33,5 +33,8 @@ namespace PcAnketProject.Service
         {
             return await _repository.UpdateAsync(duzen);
         }
+
+        
+
     }
 }

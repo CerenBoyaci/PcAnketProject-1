@@ -43,7 +43,8 @@ namespace PcAnketProject.Data.Repository
                   SET Baslik = @Baslik, 
                       Rolu = @Rolu,
                       Genislik = @Genislik,
-                      Yukseklik = @Yukseklik
+                      Yukseklik = @Yukseklik,
+                      Aktif = @Aktif
                   WHERE ID = @ID";
 
             using var connection = _dbContext.CreateConnection();

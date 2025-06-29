@@ -22,18 +22,15 @@
     @for (int i = 0; i < roller.Length; i++)
     {
         var rol = roller[i];
-        var resim = Model.FirstOrDefault(x => x.Rolu == rol);
+        var resim = Model.FirstOrDefault(x => x.Rolu == rol && x.Aktif);
 
         if (resim != null)
         {
             <div style="display: flex; align-items: center; margin-bottom: 40px; gap: 20px;">
-
                 <div style="flex: 1; text-align: center;">
                     <img src="https://localhost:7211/api/Resim/img/@resim.ResimID?width=@resim.Genislik&height=@resim.Yukseklik"
                          style="max-width: 100%; border: 1px solid #ccc;" />
                 </div>
-
-
                 <div style="flex: 2;">
                     @if (!string.IsNullOrWhiteSpace(resim.Baslik))
                     {
